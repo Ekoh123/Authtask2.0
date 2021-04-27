@@ -47,6 +47,12 @@
         return $sqlquery;
     }
 
+    function searchcoursecount ( $coursearea ,$coursename){
+
+        $sqlquery="SELECT count(*) as ct FROM course WHERE coursearea = '$coursearea' AND coursename = '$coursename'";
+        return $sqlquery;
+    }
+
     //get user's courses
     function getusercourses ($userid){
 
@@ -54,10 +60,24 @@
         return $sqlquery;
     }
 
+    //get user's courses
+    function getallcourses (){
+
+        $sqlquery="SELECT coursename FROM course";
+        return $sqlquery;
+    }
+
     //for adding course
     function insertusercourse ($userid, $course){
 
         $sqlquery="INSERT INTO usercourses (userid, course )VALUES ('$userid', '$course')";
+        return $sqlquery;
+    }
+
+    //Inserting a new course
+    function insertnewcourse ($coursearea ,$coursename){
+
+        $sqlquery="INSERT INTO course (coursearea ,coursename )VALUES ('$coursearea' ,'$coursename')";
         return $sqlquery;
     }
     ###############################################################
