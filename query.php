@@ -74,6 +74,12 @@
         return $sqlquery;
     }
 
+    function updateusercourse ($edit, $cuid){
+
+        $sqlquery="UPDATE usercourses set course = '$edit' where cuid = $cuid";
+        return $sqlquery;
+    }
+
     //Inserting a new course
     function insertnewcourse ($coursearea ,$coursename){
 

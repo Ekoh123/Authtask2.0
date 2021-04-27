@@ -188,7 +188,7 @@ $userid =  $_SESSION['userid'];
         <table>
             <thead style="font-weight: 700;">
                 <tr>
-                <td>Courses</td>
+                <td>Your Courses (EDITABLE)</td>
                 <td>
                 </td> 
                 </tr>
@@ -201,16 +201,19 @@ $userid =  $_SESSION['userid'];
             $rows=$result->num_rows;
             if ($rows > 0) {
                 while($row = $result->fetch_assoc()):        
-            ?>                            
+            ?>      
+                    <form method="POST">                      
                     <tr>
-                        <td><?php echo strtoupper($row['course'])  ?> </td>
                         <td>
-                            <form method="POST">
-                            <input type="submit" name="delete" value="delete">
+                         <input style="border:none" type="text" name="editcourse" value="<?php echo strtoupper($row['course']) ?>"/> 
+                        </td>
+                        <td>                           
+                            <input type="submit" name="edit" value="edit"/>
+                            <input type="submit" name="delete" value="delete"/>
                             <input type="hidden" name="id" value="<?php echo $row['cuid']; ?>"/>
-                            </form>
                         </td>
                     </tr>
+                    </form>
             <?php 
                 endwhile; 
                 CloseCon($connection);
@@ -223,6 +226,21 @@ $userid =  $_SESSION['userid'];
                 $cuid= $_POST['id'];               
                 $connection = OpenCon();
                 $sqlQuery=deletecourses ($userid, $cuid);
+                $result=QueryCon($connection, $sqlQuery); 
+                if ($result === TRUE) {
+                    //if successful
+                  // echo "<script type='text/javascript'> alert(Course has been deleted);</script>";
+                   header("Location: main.php");  
+                   exit;                      
+               }                                    
+            }
+            if(isset($_POST['edit'])){
+
+                $cuid= $_POST['id']; 
+                $edit=$_POST['editcourse'];             
+               
+                $connection = OpenCon();
+                $sqlQuery=updateusercourse ($edit, $cuid);
                 $result=QueryCon($connection, $sqlQuery); 
                 if ($result === TRUE) {
                     //if successful
